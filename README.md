@@ -1,6 +1,6 @@
-# ViCE
+# VCCE
 
-This repository is a Python source code designed to perform data management for PTB-XL, feature extraction, feature selection, and extraction of counterfactual clues. Additionally, ViCE includes a novel application for visualizing the counterfactual clues on electrocardiograms.
+This repository is a Python source code designed to perform data management for PTB-XL, feature extraction, feature selection, and extraction of counterfactual clues. Additionally, VCCE includes a novel application for visualizing the counterfactual clues on electrocardiograms.
 
 
 ## Installation
@@ -10,13 +10,13 @@ This repository is a Python source code designed to perform data management for 
 1. Clone the repository to your local machine using the following command:
 
 ```
-git clone https://github.com/toygarr/ViCE.git
+git clone https://github.com/tanyelai/vcce.git
 ```
 
 2. Change to the project directory:
 
 ```
-cd ViCE
+cd vcce
 ```
 
 3. Install the dependencies:
