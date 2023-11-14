@@ -1,6 +1,6 @@
 # VCCE
 
-This repository is a Python source code designed to perform data management for PTB-XL, feature extraction, feature selection, and extraction of counterfactual clues. Additionally, VCCE includes a novel application for visualizing the counterfactual clues on electrocardiograms.
+This source code is associated with the paper 'Interpretable ECG Analysis for Myocardial Infarction Detection through Counterfactuals'. It is designed for data management specific to PTB-XL, along with processes for feature extraction, selection, and the extraction of counterfactual clues. Additionally, the code includes a unique application for visualizing these counterfactual clues on electrocardiogram data.
 
 
 ## Installation
@@ -47,3 +47,4 @@ To use the notebooks for data processing, please follow these steps:
 Please feel free to explore and adapt these notebooks and source codes to align with your specific research requirements. If you encounter any problems or have questions, don't hesitate to contact the research team for assistance.
 
 ## Citation
+Will be provided.
