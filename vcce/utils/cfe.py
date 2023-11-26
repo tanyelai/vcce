@@ -127,40 +127,38 @@ class cfe_utils:
         
         root_dir = self.path
         
-        merged_data = pd.DataFrame()  # Initialize an empty DataFrame to merge the data
-        merged_original = pd.DataFrame()  # Initialize an empty DataFrame to merge the data
-        merged_cfes = pd.DataFrame()  # Initialize an empty DataFrame to merge the data
+        merged_data = pd.DataFrame()  # initialize empty DataFrames to merge the data
+        merged_original = pd.DataFrame()  
+        merged_cfes = pd.DataFrame()  
 
         path = f'{root_dir}/formatted_cfe_from_json'
         output_directory = f'{path}/{self.src}'
         os.makedirs(output_directory, exist_ok=True)
         
-        # Iterate over the files in the directory
         for filename in os.listdir(root_dir):
             if filename.endswith(f'{self.src}_to_{self.dest}.json'):
                 filepath = os.path.join(root_dir, filename)
                 
-                # Extract Rpeak index from filename
+                # extract Rpeak index from filename
                 rpeak_idx = filename.split('_')[1]
 
-                # Read the JSON data from file
+                # read the JSON data from file
                 with open(filepath, 'r') as file:
                     data = json.load(file)
 
-                # Get original data
+                # get original data
                 original_df = pd.DataFrame(data['test_data'][0], columns=data['feature_names_including_target'])
                 original_df['Beat_R_idx'] = int(rpeak_idx)
 
-                # Get cfes
+                # get cfes
                 cfe_df = pd.DataFrame(data['cfs_list'][0], columns=data['feature_names_including_target'])
                 cfe_df['Beat_R_idx'] = int(rpeak_idx) 
 
-                # Merge data into a single DataFrame
+                # merge data into a single DataFrame
                 merged_data = pd.concat([merged_data, original_df, cfe_df], ignore_index=True)
                 merged_original = pd.concat([merged_original, original_df], ignore_index=True)
                 merged_cfes = pd.concat([merged_cfes, cfe_df], ignore_index=True)
 
-        # Save merged data as an Excel file
         merged_data.to_excel(os.path.join(output_directory, f"{self.src}_to_{self.dest}_merged_data.xlsx"), index=False)
         merged_original.to_excel(os.path.join(output_directory, f"{self.src}_to_{self.dest}_merged_original.xlsx"), index=False)
         merged_cfes.to_excel(os.path.join(output_directory, f"{self.src}_to_{self.dest}_merged_cfes.xlsx"), index=False)
@@ -184,24 +182,22 @@ class cfe_utils:
         read_file = os.path.join(src_path, self.src, f'{self.src}_to_{self.dest}_merged_data.xlsx')
         write_file = os.path.join(dest_path, self.src, f'{self.src}_to_{self.dest}.xlsx')
 
-        # Read the Excel file
         df = pd.read_excel(read_file, header=0)
 
-        # Create a new column to track the baseline rows
+        # creating a new column to track the baseline rows
         df['Baseline'] = False
 
-        # Initialize the pattern count
+        # initialize the pattern count
         pattern_count = 0
-
         baseline_row = None
 
-        # Initialize a flag to track whether the current baseline is valid
+        # initialize a flag to track whether the current baseline is valid
         valid_baseline = True
 
-        # Create an empty dictionary to store feature change counts
+        # creating an empty dictionary to store feature change counts
         feature_changes = {}
 
-        # Iterate over the rows
+        # iterate over the rows
         for i, row in df.iterrows():
             if row[self.target] == self.label_mapping[self.src] and i % (cfe_count + 1) == 0:
                 baseline_row = row
@@ -228,23 +224,18 @@ class cfe_utils:
                             if df.at[i, column] != '-':
                                 feature_changes[rpeak_idx][column] += 1
 
-        # Save the updated data to a new Excel file
         df.to_excel(write_file, index=False)
 
-        # Create a new dataframe for feature change counts
         feature_changes_df = pd.DataFrame.from_dict(feature_changes, orient='index')
-
         feature_changes_df.index.name = 'Beat_R_idx'
 
-        # Sort the dataframe by indices (Rpeak_idx)
-        feature_changes_df.sort_index(inplace=True)
+        feature_changes_df.sort_index(inplace=True) # sort the dataframe by indices (Rpeak_idx)
 
         #feature_changes_df = feature_changes_df.drop(columns=[self.target, 'Baseline', 'Beat_R_idx'])
         
         # Define the file path for the feature change counts Excel file
         feature_changes_file_path = os.path.join(dest_path, self.src, f'{self.src}_to_{self.dest}_feature_changes.xlsx')
         
-        # Save the feature change counts dataframe to Excel
         feature_changes_df.to_excel(feature_changes_file_path)
 
 

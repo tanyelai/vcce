@@ -1,12 +1,11 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import neurokit2 as nk
 import os
 
 class VCCE:
     """
-    Visualizing Counterfactual clues for 12-lead ECG signals
+    Visualizing Counterfactual Clues for 12-lead ECG signals
     """
 
     def __init__(self, signal, extracted_features=None, counterfactuals=None, feature_count=None):
@@ -105,7 +104,7 @@ class VCCE:
             lead_index (int): Index of the lead.
 
         Returns:
-            np.array or list of tuples: Array of peak indices for 'P', 'Q', 'R', 'S', 'T' peaks.
+            array or list of tuples: Array of peak indices for 'P', 'Q', 'R', 'S', 'T' peaks.
                                         List of tuples of peak indices for 'ST', 'PT', 'RS', 'QS' peaks.
         """
         if self.visualization_graph is None:
@@ -204,9 +203,9 @@ class VCCE:
         """
         max_alpha = 0.3
     
-        # Extracting the power values and finding the max power
+        # extracting the power values and finding the max power
         power_values = [power for _, power in peaks]
-        max_power = max(power_values) if power_values else 1  # Avoid division by zero
+        max_power = max(power_values) if power_values else 1  # avoid division by zero
         
         for peak_info in peaks:
             if isinstance(peak_info, tuple):
@@ -216,7 +215,7 @@ class VCCE:
                 peak_sample, alpha = peak_info, max_alpha  # default alpha
             
             if alpha > max_alpha:
-                alpha = max_alpha  # Ensure that alpha doesn't exceed the maximum permissible value
+                alpha = max_alpha  # ensure that alpha doesn't exceed the maximum permissible value
                 
             if peak_sample - 6 >= 0 and peak_sample + 6 < len(signal):
                 ax.axvspan(peak_sample - 6, peak_sample + 6, color=color, alpha=alpha, label=label, zorder=zorder)
@@ -241,7 +240,7 @@ class VCCE:
         Plot the ECG report for the counterfactual clues
 
         Args:
-            signal (np.array, optional): ECG signal. Defaults to None.
+            signal (array, optional): ECG signal. Defaults to None.
             sampling_rate (int, optional): Sampling rate of the ECG signal. Defaults to 100.
             method (str, optional): Method to process the ECG signal. Defaults to "koka2022".
             show_peaks (bool, optional): Show the peaks in the ECG signal. Defaults to False.
@@ -262,7 +261,6 @@ class VCCE:
         fig, axs = plt.subplots(
             nrows=num_rows, ncols=num_cols, figsize=fig_size, constrained_layout=True)
 
-        # Aggregate Legend Handles and Labels
         legend_handles = []
         legend_labels = []
 
@@ -316,7 +314,6 @@ class VCCE:
 
         #plt.suptitle("ECG Signal Report", fontsize=18, y=1.005)
 
-        # Save and display the figure
         #plt.savefig(f"{method}_report.png", dpi=300)
 
         # When adding the aggregate legend
