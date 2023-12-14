@@ -47,4 +47,11 @@ To use the notebooks for data processing, please follow these steps:
 Please feel free to explore and adapt these notebooks and source codes to align with your specific research requirements. If you encounter any problems or have questions, don't hesitate to contact the research team for assistance.
 
 ## Citation
-Will be provided.
+@misc{tanyel2023interpretable,
+      title={Interpretable ECG Analysis for Myocardial Infarction Detection through Counterfactuals}, 
+      author={Toygar Tanyel and Sezgin Atmaca and Kaan Gökçe and M. Yiğit Balık and Arda Güler and Emre Aslanger and İlkay Öksüz},
+      year={2023},
+      eprint={2312.08304},
+      archivePrefix={arXiv},
+      primaryClass={eess.SP}
+}
